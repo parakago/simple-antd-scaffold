@@ -28,8 +28,8 @@ const MainLayout: React.FC = () => {
 	} = theme.useToken();
 
 	const items: INavBarMenuItem[] = [
-		{key: 'mail', label: 'Good', icon: <DashboardOutlined />},
-		{key: 'app', label: 'Morning', icon: <UserOutlined />}
+		{path: 'mail', label: 'Good', icon: <DashboardOutlined />},
+		{path: 'app', label: 'Morning', icon: <UserOutlined />}
 	];
 
 	return (

@@ -1,6 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouteObject, RouterProvider } from "react-router-dom";
-import EmptyLayout from "../layouts/EmptyLayout";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Spin } from "antd";
 import MainLayout from "../layouts/MainLayout";
 import { Dashboard } from "../pages/Dashboard";
@@ -14,7 +13,6 @@ const AppRouterContext = React.createContext<IAppRouteState | undefined>(undefin
 
 export const AppRouterContextProvider = () => {
 	const [appInitialized, setAppInitialized] = React.useState(false);
-	const routes = React.useRef<RouteObject[]>([{ path: '/', element: <EmptyLayout />}]);
 
 	const router = createBrowserRouter([
 		{
@@ -45,7 +43,14 @@ export const AppRouterContextProvider = () => {
 				}
 			]
 		}
-	]);
+	], {
+			future: {
+				v7_fetcherPersist: true,
+				v7_normalizeFormMethod: true,
+				v7_relativeSplatPath: true,
+				v7_skipActionErrorRevalidation: true,
+			}
+	});
 
 	React.useEffect(() => {
 		(async () => {
@@ -66,7 +71,7 @@ export const AppRouterContextProvider = () => {
 	
 	return (
 		<AppRouterContext.Provider value={{}}>
-			<RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
+			<RouterProvider router={router} future={{ v7_startTransition: true }} fallbackElement={<p>Loading...</p>} />
 		</AppRouterContext.Provider>
 		
 	);
