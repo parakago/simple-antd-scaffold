@@ -22,21 +22,25 @@ const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOu
 
 const MainLayout: React.FC = () => {
 	const appCtx = useAppContext();
+	const navigate = useNavigate();
 
 	const {
 		token: { borderRadiusLG }
 	} = theme.useToken();
 
 	const items: INavBarMenuItem[] = [
-		{path: 'mail', label: 'Good', icon: <DashboardOutlined />},
-		{path: 'app', label: 'Morning', icon: <UserOutlined />}
+		{path: 'about', label: 'Dashboard', icon: <DashboardOutlined />},
+		{path: 'helo', label: 'Morning', icon: <UserOutlined />}
 	];
 
 	return (
 		<Layout>
 			<Layout.Header className='h-12 py-1 flex gap-x-4 items-center'>
 				<NavBarLogo className='w-28 h-8' />
-				<NavBarMenu className='grow h-full' items={items} />
+				<NavBarMenu className='grow h-full' items={items} onSelect={(menu) => {
+					console.log(menu.path);
+					navigate(menu.path);
+				}} />
 				<NavBarUser className='h-8' />
 			</Layout.Header>
 
@@ -52,11 +56,7 @@ const MainLayout: React.FC = () => {
 						items={items2}
 					/>
 					<div className='grow '>
-						<Card title="Default size card" className='w-full' extra={<a href="#">More</a>}>
-							<p>Card content</p>
-							<p>Card content</p>
-							<p>Card content</p>
-						</Card>
+						<Outlet/>
 					</div>
 				</div>
 			</Layout.Content>

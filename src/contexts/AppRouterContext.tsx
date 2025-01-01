@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 import { Spin } from "antd";
 import MainLayout from "../layouts/MainLayout";
 import { Dashboard } from "../pages/Dashboard";
@@ -14,33 +14,15 @@ const AppRouterContext = React.createContext<IAppRouteState | undefined>(undefin
 export const AppRouterContextProvider = () => {
 	const [appInitialized, setAppInitialized] = React.useState(false);
 
-	const router = createBrowserRouter([
+	const router = createHashRouter([
 		{
 			path: '/',
 			element: <MainLayout />,
 			children: [
-				{
-					index: true,
-					element: <Dashboard />,
-				},
-				{
-					path: 'about',
-					async lazy() {
-						let { About } = await import('../pages/About');
-						return { Component: About }
-					}
-				},
-				{
-					path: 'helo',
-					async lazy() {
-						let { Helo } = await import('../pages/Helo');
-						return { Component: Helo }
-					}
-				},
-				{
-					path: "*",
-					element: <NoMatch />,
-				}
+				{ index: true, element: <Dashboard /> },
+				{ path: 'about', async lazy() { let { About } = await import('../pages/About'); return { Component: About } } },
+				{ path: 'helo', async lazy() { let { Helo } = await import('../pages/Helo'); return { Component: Helo } } },
+				{ path: "*", element: <NoMatch /> }
 			]
 		}
 	], {
