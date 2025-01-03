@@ -1,4 +1,4 @@
-import { Util } from "../../apis/Util";
+import { Util } from "@apis";
 import React from 'react';
 
 export interface INavBarMenuItem {

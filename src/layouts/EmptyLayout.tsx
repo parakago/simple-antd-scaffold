@@ -1,7 +1,10 @@
+import { App } from '@contexts';
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const EmptyLayout: React.FC = () => {
+	App.navigate = useNavigate();
+	
 	return (
 		<Outlet />
 	)

@@ -1,13 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './main.css'
-import { AppContextProvider } from './contexts/AppContext';
-import { AppRouterContextProvider } from './contexts/AppRouterContext';
+import { AppAuthProvider, AppContextProvider, AppRouterContextProvider } from '@contexts';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './main.css';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<AppContextProvider>
-			<AppRouterContextProvider/>
+			<AppAuthProvider>
+				<AppRouterContextProvider/>
+			</AppAuthProvider>
 		</AppContextProvider>
-	</StrictMode>,
+	</StrictMode>
 )

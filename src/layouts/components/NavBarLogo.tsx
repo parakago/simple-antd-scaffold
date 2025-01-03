@@ -1,5 +1,5 @@
 import { ProductOutlined } from "@ant-design/icons";
-import { Util } from "../../apis/Util";
+import { Util } from "@apis";
 
 export interface INavBarLogoProps {
 	className?: string;

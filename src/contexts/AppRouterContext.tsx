@@ -1,6 +1,6 @@
+import { Spin } from "antd";
 import React from "react";
 import { RouterProvider, createHashRouter } from "react-router-dom";
-import { Spin } from "antd";
 import MainLayout from "../layouts/MainLayout";
 import { Dashboard } from "../pages/Dashboard";
 import { NoMatch } from "../pages/commons/NoMatch";
@@ -13,7 +13,6 @@ const AppRouterContext = React.createContext<IAppRouteState | undefined>(undefin
 
 export const AppRouterContextProvider = () => {
 	const [appInitialized, setAppInitialized] = React.useState(false);
-
 	const router = createHashRouter([
 		{
 			path: '/',

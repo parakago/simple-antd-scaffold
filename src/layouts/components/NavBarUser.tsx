@@ -1,8 +1,8 @@
 import { MoonOutlined, SunOutlined, UserOutlined } from "@ant-design/icons";
+import { useAppContext } from "@contexts";
 import { Avatar, Tooltip } from "antd";
-import { Util } from "../../apis/Util";
-import { useAppContext } from "../../contexts/AppContext";
 import React from "react";
+import { Util } from "../../apis/Util";
 
 export interface INavBarUserProps {
 	className?: string;
@@ -12,11 +12,11 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 	const appCtx = useAppContext();
 	
 	const isDarkMode = () => {
-		return appCtx.getCurrentTheme() == 'dark';
+		return appCtx.theme == 'dark';
 	}
 
 	const switchAppTheme = () => {
-		appCtx.changeAppTheme(isDarkMode() ? 'light' : 'dark');
+		appCtx.changeTheme(isDarkMode() ? 'light' : 'dark');
 	};
 
 	const cls = Util.classNames('flex items-center text-white gap-2', className);

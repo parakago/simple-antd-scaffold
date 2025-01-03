@@ -1,11 +1,11 @@
+import { DashboardOutlined, LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { App } from '@contexts';
+import type { MenuProps } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { DashboardOutlined, LaptopOutlined, NotificationOutlined, SettingOutlined, SwitcherOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Avatar, Breadcrumb, Card, Layout, Menu, Space, Switch, Typography, theme } from 'antd';
-import { useAppContext } from '../contexts/AppContext';
-import NavBarMenu, { INavBarMenuItem } from './components/NavBarMenu';
 import NavBarLogo from './components/NavBarLogo';
+import NavBarMenu, { INavBarMenuItem } from './components/NavBarMenu';
 import NavBarUser from './components/NavBarUser';
 
 const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
@@ -21,8 +21,7 @@ const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOu
 );
 
 const MainLayout: React.FC = () => {
-	const appCtx = useAppContext();
-	const navigate = useNavigate();
+	App.navigate = useNavigate();
 
 	const {
 		token: { borderRadiusLG }
@@ -39,7 +38,7 @@ const MainLayout: React.FC = () => {
 				<NavBarLogo className='w-28 h-8' />
 				<NavBarMenu className='grow h-full' items={items} onSelect={(menu) => {
 					console.log(menu.path);
-					navigate(menu.path);
+					App.navigate(menu.path);
 				}} />
 				<NavBarUser className='h-8' />
 			</Layout.Header>
