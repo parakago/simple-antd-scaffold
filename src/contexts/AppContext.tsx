@@ -118,7 +118,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 			<ConfigProvider componentSize='middle' locale={locale}
 				theme={{
 					cssVar: true,
-					algorithm: theme == 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
+					algorithm: theme === 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
 					components: {
 						Layout: {
 							headerBg: '#162333',
@@ -136,7 +136,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 
 export function useAppContext() : IAppState {
 	const appContext = React.useContext(AppContext);
-	if (appContext == null) {
+	if (appContext === undefined) {
 		throw new Error('useAppContext() should be used within AppContext.Provider');
 	}
 	

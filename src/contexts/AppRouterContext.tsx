@@ -60,7 +60,7 @@ export const AppRouterContextProvider = () => {
 
 export function useAppRouterContext() : IAppRouteState {
 	const appRouteContext = React.useContext(AppRouterContext);
-	if (appRouteContext == null) {
+	if (appRouteContext === undefined) {
 		throw new Error('useAppRouterContext() should be used within AppRouterContext.Provider');
 	}
 	

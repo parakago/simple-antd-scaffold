@@ -12,7 +12,7 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 	const appCtx = useAppContext();
 	
 	const isDarkMode = () => {
-		return appCtx.theme == 'dark';
+		return appCtx.theme === 'dark';
 	}
 
 	const switchAppTheme = () => {

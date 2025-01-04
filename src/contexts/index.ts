@@ -1,3 +1,3 @@
 export * from './AppContext';
-export * from './AppAuthContext';
+export * from './AppSessionContext';
 export * from './AppRouterContext';

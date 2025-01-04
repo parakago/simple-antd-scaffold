@@ -31,4 +31,8 @@ export namespace Util {
 		
 		return cls.join(' ');
 	}
+
+	export function isEmpty(value: string | null | undefined): boolean {
+		return value === null || value === undefined || value === '';
+	}
 }
