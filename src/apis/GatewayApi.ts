@@ -31,7 +31,7 @@ export const GatewayApi = {
 		});
 	},
 	login: (request: IAuthRequest): Promise<IAuthResponse> => {
-		const result = request.uid === request.pwd ? 0 : 1;
+		const result = Util.isNotEmpty(request.uid) && request.uid === request.pwd ? 0 : 1;
 		if (result === 0) {
 			document.cookie = `mock_session_uid=${request.uid}`;
 		}

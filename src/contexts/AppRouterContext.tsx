@@ -2,8 +2,9 @@ import { Spin } from "antd";
 import React from "react";
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import { Dashboard } from "../pages/Dashboard";
+import { Dashboard } from "../pages/main/Dashboard";
 import { NoMatch } from "../pages/commons/NoMatch";
+import EmptyLayout from "../layouts/EmptyLayout";
 
 export interface IAppRouteState {
 	
@@ -19,10 +20,17 @@ export const AppRouterContextProvider = () => {
 			element: <MainLayout />,
 			children: [
 				{ index: true, element: <Dashboard /> },
-				{ path: 'about', async lazy() { let { About } = await import('../pages/About'); return { Component: About } } },
-				{ path: 'helo', async lazy() { let { Helo } = await import('../pages/Helo'); return { Component: Helo } } },
+				{ path: '/dashboard', async lazy() { let { Dashboard } = await import('../pages/main/Dashboard'); return { Component: Dashboard } } },
+				{ path: '/helo', async lazy() { let { Helo } = await import('../pages/main/Helo'); return { Component: Helo } } },
 				{ path: "*", element: <NoMatch /> }
 			]
+		},
+		{
+			element: <EmptyLayout/>,
+			children: [
+				{ path: '/login', async lazy() { let { Login } = await import('../pages/empty/Login'); return { Component: Login } } },
+			],
+			hydrateFallbackElement: <></>
 		}
 	], {
 			future: {

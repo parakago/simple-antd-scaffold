@@ -30,7 +30,7 @@ const NavBarMenu: React.FC<INavBarMenuProps> = ({className, items, defaultPath, 
 							setSelectedMenuKey(item.path);
 						}}
 					>
-						{item.icon}<span className="pl-1">{item.label}</span>
+						<span>{item.icon}</span> <span className="pl-1">{item.label}</span>
 					</li>
 				)
 			})}

@@ -126,7 +126,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 					}
 				}}
 			>
-				<App>
+				<App className='h-full'>
 					{children}
 				</App>
 			</ConfigProvider>

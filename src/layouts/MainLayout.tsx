@@ -1,4 +1,4 @@
-import { DashboardOutlined, LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LaptopOutlined, NotificationOutlined, TeamOutlined, ToolOutlined, UserOutlined } from '@ant-design/icons';
 import { App } from '@contexts';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, theme } from 'antd';
@@ -7,11 +7,11 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import NavBarLogo from './components/NavBarLogo';
 import NavBarMenu, { INavBarMenuItem } from './components/NavBarMenu';
 import NavBarUser from './components/NavBarUser';
+import { AppApi, GatewayApi, IWebMenu } from '@apis';
 
 const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
 	(icon, index) => {
 		const key = String(index + 1);
-
 		return {
 			key: `sub${key}`,
 			icon: React.createElement(icon),
@@ -20,23 +20,48 @@ const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOu
 	},
 );
 
+const PreDefinedIconMap: { [name: string]: React.ReactNode } = {
+	dashboard: <DashboardOutlined />,
+	tool: <ToolOutlined />,
+	team: <TeamOutlined />,
+	user: <UserOutlined />
+}
+
 const MainLayout: React.FC = () => {
 	App.navigate = useNavigate();
 
-	const {
-		token: { borderRadiusLG }
-	} = theme.useToken();
+	const [navBarMenuItems, setNavBarMenuItems] = React.useState<INavBarMenuItem[]>([]);
+	const refWebMenus = React.useRef<IWebMenu[]>();
+	
+	React.useEffect(() => {
+		if (refWebMenus.current !== undefined) return;
+		
+		(async () => {
+			const status = await GatewayApi.sessionStatus();
+			if (status === null) {
+				App.navigate('/login', { replace: true });
+				return;
+			}
 
-	const items: INavBarMenuItem[] = [
-		{path: 'about', label: 'Dashboard', icon: <DashboardOutlined />},
-		{path: 'helo', label: 'Morning', icon: <UserOutlined />}
-	];
+			refWebMenus.current = await AppApi.webMenus();
+			const topMenuItems = (refWebMenus.current).map((webMenu) => {
+				return {
+					path: webMenu.path,
+					label: webMenu.label,
+					icon: PreDefinedIconMap[webMenu.icon ?? 'none']
+				}
+			});
+			setNavBarMenuItems(topMenuItems);
+		})();
+	}, []);
+
+	const { token: { borderRadiusLG } } = theme.useToken();
 
 	return (
 		<Layout>
 			<Layout.Header className='h-12 py-1 flex gap-x-4 items-center'>
 				<NavBarLogo className='w-28 h-8' />
-				<NavBarMenu className='grow h-full' items={items} onSelect={(menu) => {
+				<NavBarMenu className='grow h-full' items={navBarMenuItems} onSelect={(menu) => {
 					console.log(menu.path);
 					App.navigate(menu.path);
 				}} />

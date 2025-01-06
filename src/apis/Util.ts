@@ -33,6 +33,10 @@ export namespace Util {
 	}
 
 	export function isEmpty(value: string | null | undefined): boolean {
-		return value === null || value === undefined || value === '';
+		return value === undefined || value === null || value === '';
+	}
+
+	export function isNotEmpty(value: string | null | undefined): boolean {
+		return !isEmpty(value);
 	}
 }
