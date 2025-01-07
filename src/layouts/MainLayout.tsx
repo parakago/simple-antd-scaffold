@@ -1,7 +1,7 @@
-import { DashboardOutlined, LaptopOutlined, NotificationOutlined, TeamOutlined, ToolOutlined, UserOutlined } from '@ant-design/icons';
+import { DashboardOutlined, LaptopOutlined, LoadingOutlined, NotificationOutlined, TeamOutlined, ToolOutlined, UserOutlined } from '@ant-design/icons';
 import { App } from '@contexts';
 import type { MenuProps } from 'antd';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu, Spin, theme } from 'antd';
 import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import NavBarLogo from './components/NavBarLogo';
@@ -54,6 +54,10 @@ const MainLayout: React.FC = () => {
 			setNavBarMenuItems(topMenuItems);
 		})();
 	}, []);
+
+	if (refWebMenus.current === undefined) {
+		return <></>;
+	}
 
 	const { token: { borderRadiusLG } } = theme.useToken();
 

@@ -5,6 +5,7 @@ import MainLayout from "../layouts/MainLayout";
 import { Dashboard } from "../pages/main/Dashboard";
 import { NoMatch } from "../pages/commons/NoMatch";
 import EmptyLayout from "../layouts/EmptyLayout";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export interface IAppRouteState {
 	
@@ -51,9 +52,7 @@ export const AppRouterContextProvider = () => {
 	if (!appInitialized) {
 		return (
 			<div className="flex h-full items-center justify-center">
-				<Spin tip="Initializing Router ..." className="align-middle" size="large">
-					<div className="w-40 h-40"/>
-				</Spin>
+				<Spin indicator={<LoadingOutlined className='text-5xl' spin />} />
 			</div>
 		);
 	}
