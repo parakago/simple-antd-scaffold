@@ -1,12 +1,18 @@
 import { CloseSquareFilled, LockOutlined, UserOutlined } from "@ant-design/icons";
-import { GatewayApi } from "@apis";
+import { GatewayApi, Util } from "@apis";
+import { App } from "@contexts";
 import { Alert, Button, Card, Checkbox, Flex, Form, Input, Typography } from "antd";
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 export const Login: React.FC = () => {
 	const [loginErrMessage, setLoginErrMessage] = React.useState<string>();
-
 	const [form] = Form.useForm();
+
+	let redirectPath = Util.nvl(useLocation().state?.redirectPath); // only from handleError in AppErrorBoundary.tsx
+	if (redirectPath === '') {
+		redirectPath = '/dashboard';
+	}
 
 	const handleOnFinish = async (values: any) => {
 		const result = await GatewayApi.login({uid: values.uid, pwd: values.pwd})
@@ -16,10 +22,10 @@ export const Login: React.FC = () => {
 			return;
 		}
 		
-		// TODO: redirect
+		App.navigate(redirectPath, { state: null, replace: true });
 	};
 
-	const handleAlertClose = () => {
+	const handleOnAlertClose = () => {
 		setLoginErrMessage(undefined);
 		form.resetFields();
 	}
@@ -28,7 +34,7 @@ export const Login: React.FC = () => {
 		<Flex className="h-full" gap="small" justify="center" align="center" vertical>
 			<Typography.Title level={3} className="text-center font-bold" >Log in to HELO</Typography.Title>
 			{loginErrMessage !== undefined && (
-				<Alert type="error" className="w-80" afterClose={handleAlertClose}
+				<Alert type="error" className="w-80" afterClose={handleOnAlertClose}
 					message={loginErrMessage}
 					closable={{ 'aria-label': 'close', closeIcon: <CloseSquareFilled /> }}
 				/>

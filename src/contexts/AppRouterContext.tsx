@@ -1,11 +1,9 @@
-import { Spin } from "antd";
 import React from "react";
 import { RouterProvider, createHashRouter } from "react-router-dom";
-import MainLayout from "../layouts/MainLayout";
-import { Dashboard } from "../pages/main/Dashboard";
+import PublicLayout from "../layouts/PublicLayout";
+import PrivateLayout from "../layouts/PrivateLayout";
 import { NoMatch } from "../pages/commons/NoMatch";
-import EmptyLayout from "../layouts/EmptyLayout";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Dashboard } from "../pages/private/Dashboard";
 
 export interface IAppRouteState {
 	
@@ -14,22 +12,21 @@ export interface IAppRouteState {
 const AppRouterContext = React.createContext<IAppRouteState | undefined>(undefined);
 
 export const AppRouterContextProvider = () => {
-	const [appInitialized, setAppInitialized] = React.useState(false);
 	const router = createHashRouter([
 		{
 			path: '/',
-			element: <MainLayout />,
+			element: <PrivateLayout />,
 			children: [
 				{ index: true, element: <Dashboard /> },
-				{ path: '/dashboard', async lazy() { let { Dashboard } = await import('../pages/main/Dashboard'); return { Component: Dashboard } } },
-				{ path: '/helo', async lazy() { let { Helo } = await import('../pages/main/Helo'); return { Component: Helo } } },
+				{ path: '/dashboard', async lazy() { let { Dashboard } = await import('../pages/private/Dashboard'); return { Component: Dashboard } } },
+				{ path: '/helo', async lazy() { let { Helo } = await import('../pages/private/Helo'); return { Component: Helo } } },
 				{ path: "*", element: <NoMatch /> }
 			]
 		},
 		{
-			element: <EmptyLayout/>,
+			element: <PublicLayout/>,
 			children: [
-				{ path: '/login', async lazy() { let { Login } = await import('../pages/empty/Login'); return { Component: Login } } },
+				{ path: '/login', async lazy() { let { Login } = await import('../pages/public/Login'); return { Component: Login } } },
 			],
 			hydrateFallbackElement: <></>
 		}
@@ -42,21 +39,6 @@ export const AppRouterContextProvider = () => {
 			}
 	});
 
-	React.useEffect(() => {
-		(async () => {
-			// dynamic
-			setAppInitialized(true);
-		})();
-	}, []);
-
-	if (!appInitialized) {
-		return (
-			<div className="flex h-full items-center justify-center">
-				<Spin indicator={<LoadingOutlined className='text-5xl' spin />} />
-			</div>
-		);
-	}
-	
 	return (
 		<AppRouterContext.Provider value={{}}>
 			<RouterProvider router={router} future={{ v7_startTransition: true }} fallbackElement={<p>Loading...</p>} />

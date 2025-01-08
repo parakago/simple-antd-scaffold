@@ -80,6 +80,7 @@ export interface IApp {
 	modal: AppModal;
 	message: AppMessage;
 	navigate: (to: To, options?: NavigateOptions) => void;
+	redirectToLogin: (redirectPathAfterLogin: string) => void;
 }
 
 let _appInstance: IApp;
@@ -95,7 +96,13 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 	_appInstance = {
 		modal: new AppModal(modal),
 		message: new AppMessage(message),
-		navigate: () => { console.log('[DEV-ERROR] Navigate not assigned'); } // assigned in layout
+		navigate: () => { console.log('[DEV-ERROR] Navigate not assigned'); }, // assigned in layout
+		redirectToLogin: (redirectPathAfterLogin: string) => {
+			_appInstance.navigate('/login', { 
+				state: { redirectPathAfterLogin },
+				replace: true
+			});
+		}
 	}
 
 	const changeTheme = (theme: 'dark' | 'light') => {

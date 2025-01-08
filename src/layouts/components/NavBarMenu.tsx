@@ -15,9 +15,10 @@ export interface INavBarMenuProps {
 }
 
 const NavBarMenu: React.FC<INavBarMenuProps> = ({className, items, defaultPath, onSelect}) => {
-	const containerClassName = Util.classNames("flex items-center text-white", className);
 	const [selectedMenuKey, setSelectedMenuKey] = React.useState<string|undefined>(defaultPath);
 
+	const containerClassName = Util.classNames("flex items-center text-white", className);
+	
 	return (
 		<ul className={containerClassName}>
 			{items.map((item) => {

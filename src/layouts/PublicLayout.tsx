@@ -2,7 +2,7 @@ import { App } from '@contexts';
 import React from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
-const EmptyLayout: React.FC = () => {
+const PublicLayout: React.FC = () => {
 	App.navigate = useNavigate();
 	
 	return (
@@ -10,4 +10,4 @@ const EmptyLayout: React.FC = () => {
 	)
 }
 
-export default EmptyLayout;
+export default PublicLayout;

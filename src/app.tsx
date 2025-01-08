@@ -1,7 +1,7 @@
-import { AppSessionProvider, AppContextProvider, AppRouterContextProvider } from '@contexts';
+import { AppContextProvider, AppRouterContextProvider, AppSessionProvider } from '@contexts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './main.css';
+import './app.css';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>

@@ -39,4 +39,17 @@ export namespace Util {
 	export function isNotEmpty(value: string | null | undefined): boolean {
 		return !isEmpty(value);
 	}
+
+	export function nvl(value: string | undefined | null, defaultValue: string = ''): string {
+		return value === null || value === undefined ? defaultValue : value;
+	}
+
+	export function getBrowserPath(): string {
+		let currentPath = window.location.hash;
+		if (currentPath.indexOf('#') != -1) {
+			currentPath = currentPath.replace(/\#/g, '');
+		}
+	
+		return currentPath;
+	}
 }

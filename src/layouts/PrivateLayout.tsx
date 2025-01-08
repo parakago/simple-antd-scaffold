@@ -3,11 +3,11 @@ import { App } from '@contexts';
 import type { MenuProps } from 'antd';
 import { Layout, Menu, Spin, theme } from 'antd';
 import React from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import NavBarLogo from './components/NavBarLogo';
 import NavBarMenu, { INavBarMenuItem } from './components/NavBarMenu';
 import NavBarUser from './components/NavBarUser';
-import { AppApi, GatewayApi, IWebMenu } from '@apis';
+import { AppApi, GatewayApi, IWebMenu, Util } from '@apis';
 
 const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
 	(icon, index) => {
@@ -27,19 +27,25 @@ const PreDefinedIconMap: { [name: string]: React.ReactNode } = {
 	user: <UserOutlined />
 }
 
-const MainLayout: React.FC = () => {
+const PrivateLayout: React.FC = () => {
 	App.navigate = useNavigate();
 
 	const [navBarMenuItems, setNavBarMenuItems] = React.useState<INavBarMenuItem[]>([]);
 	const refWebMenus = React.useRef<IWebMenu[]>();
-	
+	const { pathname } = useLocation();
+	const { token: { borderRadiusLG } } = theme.useToken();
+
 	React.useEffect(() => {
 		if (refWebMenus.current !== undefined) return;
 		
 		(async () => {
 			const status = await GatewayApi.sessionStatus();
 			if (status === null) {
-				App.navigate('/login', { replace: true });
+				let currentPath = Util.getBrowserPath();
+				if (currentPath === '/') {
+					currentPath = '/dashboard';
+				}
+				App.redirectToLogin(currentPath);
 				return;
 			}
 
@@ -56,16 +62,21 @@ const MainLayout: React.FC = () => {
 	}, []);
 
 	if (refWebMenus.current === undefined) {
-		return <></>;
+		return (
+			<div className="flex h-full items-center justify-center">
+				<Spin indicator={<LoadingOutlined className='text-5xl' spin />} />
+			</div>
+		);
 	}
 
-	const { token: { borderRadiusLG } } = theme.useToken();
+	const paths = pathname.split('/').filter((path) => path !== '');
+	const navBarDefaultPath = paths.length > 0 ? `/${paths[0]}` : undefined;
 
 	return (
 		<Layout>
 			<Layout.Header className='h-12 py-1 flex gap-x-4 items-center'>
 				<NavBarLogo className='w-28 h-8' />
-				<NavBarMenu className='grow h-full' items={navBarMenuItems} onSelect={(menu) => {
+				<NavBarMenu className='grow h-full' defaultPath={navBarDefaultPath} items={navBarMenuItems} onSelect={(menu) => {
 					console.log(menu.path);
 					App.navigate(menu.path);
 				}} />
@@ -96,4 +107,4 @@ const MainLayout: React.FC = () => {
 	);
 }
 
-export default MainLayout;
+export default PrivateLayout;
