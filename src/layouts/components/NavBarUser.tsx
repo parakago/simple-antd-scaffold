@@ -2,7 +2,7 @@ import { MoonOutlined, SunOutlined, UserOutlined } from "@ant-design/icons";
 import { useAppContext } from "@contexts";
 import { Avatar, Tooltip } from "antd";
 import React from "react";
-import { Util } from "../../apis/Util";
+import { AppUtil } from "../../apis/AppUtil";
 
 export interface INavBarUserProps {
 	className?: string;
@@ -19,7 +19,7 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 		appCtx.changeTheme(isDarkMode() ? 'light' : 'dark');
 	};
 
-	const cls = Util.classNames('flex items-center text-white gap-2', className);
+	const cls = AppUtil.classNames('flex items-center text-white gap-2', className);
 	return (
 		<div className={cls}>
 			<Tooltip title={`Enable ${isDarkMode() ? "light" : "dark"} mode`}>

@@ -1,4 +1,4 @@
-import { Util } from "./Util";
+import { AppUtil } from "./AppUtil";
 
 class FetchClient {
 	private _baseUrl: string;
@@ -25,7 +25,7 @@ class FetchClient {
 	public async get<T>(endpoint: string, param?: any): Promise<T> {
 		let targetEndpoint = endpoint;
 		if (param !== undefined) {
-			targetEndpoint+= `?${Util.isString(param) ? param : new URLSearchParams(param)}`;
+			targetEndpoint+= `?${AppUtil.isString(param) ? param : new URLSearchParams(param)}`;
 		}
 		
 		return this.invoke('GET', targetEndpoint, param);

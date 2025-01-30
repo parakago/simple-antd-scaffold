@@ -3,7 +3,6 @@ import { RouterProvider, createHashRouter } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import PrivateLayout from "../layouts/PrivateLayout";
 import { NoMatch } from "../pages/commons/NoMatch";
-import { Dashboard } from "../pages/private/Dashboard";
 
 export interface IAppRouteState {
 	
@@ -17,9 +16,9 @@ export const AppRouterContextProvider = () => {
 			path: '/',
 			element: <PrivateLayout />,
 			children: [
-				{ index: true, element: <Dashboard /> },
 				{ path: '/dashboard', async lazy() { let { Dashboard } = await import('../pages/private/Dashboard'); return { Component: Dashboard } } },
-				{ path: '/helo', async lazy() { let { Helo } = await import('../pages/private/Helo'); return { Component: Helo } } },
+				{ path: '/admin/role', async lazy() { let { RolePage } = await import('../pages/private/admin/RolePage'); return { Component: RolePage } } },
+				{ path: '/admin/user', async lazy() { let { UserPage } = await import('../pages/private/admin/UserPage'); return { Component: UserPage } } },
 				{ path: "*", element: <NoMatch /> }
 			]
 		},

@@ -1,5 +1,5 @@
 import { CloseSquareFilled, LockOutlined, UserOutlined } from "@ant-design/icons";
-import { GatewayApi, Util } from "@apis";
+import { AppApi, GatewayApi, AppUtil } from "@apis";
 import { App } from "@contexts";
 import { Alert, Button, Card, Checkbox, Flex, Form, Input, Typography } from "antd";
 import React from "react";
@@ -9,9 +9,9 @@ export const Login: React.FC = () => {
 	const [loginErrMessage, setLoginErrMessage] = React.useState<string>();
 	const [form] = Form.useForm();
 
-	let redirectPath = Util.nvl(useLocation().state?.redirectPath); // only from handleError in AppErrorBoundary.tsx
+	let redirectPath = AppUtil.nvl(useLocation().state?.redirectPath); // only from handleError in AppErrorBoundary.tsx
 	if (redirectPath === '') {
-		redirectPath = '/dashboard';
+		redirectPath = AppApi.DEFAULT_WEB_PATH;
 	}
 
 	const handleOnFinish = async (values: any) => {

@@ -1,3 +1,5 @@
+export const DEFAULT_WEB_PATH = '/dashboard';
+
 export interface IWebMenu {
 	path: string;
 	label: string;
@@ -6,6 +8,10 @@ export interface IWebMenu {
 }
 
 export const AppApi = {
+	_default_web_path: '/dashboard',
+	get DEFAULT_WEB_PATH() {
+		return this._default_web_path;
+	},
 	webMenus: (): Promise<IWebMenu[]> => {
 		return Promise.resolve([{
 			path: '/dashboard',

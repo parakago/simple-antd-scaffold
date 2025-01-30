@@ -1,4 +1,4 @@
-export namespace Util {
+export namespace AppUtil {
 	export function isArray(value: any): boolean {
 		return Array.isArray(value);
 	}
@@ -51,5 +51,12 @@ export namespace Util {
 		}
 	
 		return currentPath;
+	}
+
+	export function extractCurrentWebMenuPath(): [string | undefined, string | undefined] {
+		const paths = getBrowserPath().split('/').filter((path) => path !== '');
+		const mainWebMenuPath = paths.length > 0 ? `/${paths[0]}` : undefined;
+		const subWebMenuPath = paths.length > 1 ? `/${paths[0]}/${paths[1]}` : undefined;
+		return [mainWebMenuPath, subWebMenuPath];
 	}
 }
