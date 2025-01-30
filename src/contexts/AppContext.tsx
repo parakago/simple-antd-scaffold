@@ -126,9 +126,15 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 				theme={{
 					cssVar: true,
 					algorithm: theme === 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
+					token: {
+						fontFamily: 'Spoqa Han Sans Neo, sans-serif'
+					},
 					components: {
 						Layout: {
 							headerBg: '#162333',
+						},
+						Form: {
+							fontFamily: 'Spoqa Han Sans Neo, sans-serif'
 						}
 					}
 				}}
