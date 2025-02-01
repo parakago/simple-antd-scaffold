@@ -94,13 +94,13 @@ const PrivateLayout: React.FC = () => {
 				<div className='flex gap-3' >
 					<Menu
 						mode="inline"
-						className='min-w-52 w-52 h-full rounded-lg'
+						className='min-w-52 max-w-52 h-full rounded-lg'
 						selectedKeys={subWebMenuPath === undefined ? undefined : [subWebMenuPath]}
 						style={{ display: subMenuItems?.length == 0 ? 'none' : 'block' }}
 						items={subMenuItems}
 						onSelect={handleOnSelectMenu}
 					/>
-					<div className='grow '>
+					<div className='grow'>
 						{outlet}
 					</div>
 				</div>
