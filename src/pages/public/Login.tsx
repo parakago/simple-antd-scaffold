@@ -40,7 +40,7 @@ export const Login: React.FC = () => {
 				/>
 			)}
 			<Card className="w-80">
-				<Form name="login" layout="vertical" form={form} onFinish={handleOnFinish}>
+				<Form name="login" layout="vertical" form={form} onFinish={handleOnFinish} initialValues={{uid: "gdhong", pwd: "gdhong"}}>
 					<Form.Item name="uid" label="Username" rules={[{ required: true, message: "Please input your username!" }]}>
 						<Input prefix={<UserOutlined />} autoFocus />
 					</Form.Item>

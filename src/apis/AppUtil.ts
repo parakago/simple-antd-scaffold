@@ -44,6 +44,10 @@ export namespace AppUtil {
 		return value === null || value === undefined ? defaultValue : value;
 	}
 
+	export function randomUUID(): string {
+		return self.crypto.randomUUID();
+	}
+
 	export function getBrowserPath(): string {
 		let currentPath = window.location.hash;
 		if (currentPath.indexOf('#') != -1) {
