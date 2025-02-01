@@ -2,7 +2,7 @@ import { DashboardOutlined, LoadingOutlined, TeamOutlined, ToolOutlined, UserOut
 import { AppApi, AppUtil, GatewayApi, IWebMenu } from '@apis';
 import { App } from '@contexts';
 import { Layout, Menu, MenuProps, Spin } from 'antd';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import NavBarLogo from './components/NavBarLogo';
 import NavBarMenu, { INavBarMenuItem } from './components/NavBarMenu';
@@ -23,10 +23,10 @@ const getChildWebMenus = (mainWebMenus: IWebMenu[], mainWebMenuPath: string): IW
 const PrivateLayout: React.FC = () => {
 	App.navigate = useNavigate();
 
-	const refWebMenus = React.useRef<IWebMenu[]>();
-	const [mainMenuItems, setMainMenuItems] = React.useState<INavBarMenuItem[]>([]);
+	const refWebMenus = useRef<IWebMenu[]>(undefined);
+	const [mainMenuItems, setMainMenuItems] = useState<INavBarMenuItem[]>([]);
 	
-	React.useEffect(() => {
+	useEffect(() => {
 		if (refWebMenus.current !== undefined) return;
 		
 		(async () => {

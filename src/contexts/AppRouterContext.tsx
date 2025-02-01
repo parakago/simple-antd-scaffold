@@ -20,7 +20,8 @@ export const AppRouterContextProvider = () => {
 				{ path: '/admin/role', async lazy() { let { RolePage } = await import('../pages/private/admin/RolePage'); return { Component: RolePage } } },
 				{ path: '/admin/user', async lazy() { let { UserPage } = await import('../pages/private/admin/UserPage'); return { Component: UserPage } } },
 				{ path: "*", element: <NoMatch /> }
-			]
+			],
+			hydrateFallbackElement: <p>Loading...</p>
 		},
 		{
 			element: <PublicLayout/>,
@@ -40,7 +41,7 @@ export const AppRouterContextProvider = () => {
 
 	return (
 		<AppRouterContext.Provider value={{}}>
-			<RouterProvider router={router} future={{ v7_startTransition: true }} fallbackElement={<p>Loading...</p>} />
+			<RouterProvider router={router} />
 		</AppRouterContext.Provider>
 		
 	);
