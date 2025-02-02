@@ -46,7 +46,7 @@ export const AppApi = {
 			}
 		]);
 	},
-	roles: (): Promise<IRole[]> => {
+	getRoles: (): Promise<IRole[]> => {
 		return Promise.resolve<IRole[]>([
 			{
 				id: AppUtil.randomUUID(),

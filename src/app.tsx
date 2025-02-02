@@ -1,8 +1,9 @@
+import '@ant-design/v5-patch-for-react-19';
 import { AppContextProvider, AppRouterContextProvider, AppSessionProvider } from '@contexts';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './assets/fonts/SpoqaHanSansNeo.css';
 import './app.css';
+import './assets/fonts/SpoqaHanSansNeo.css';
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>

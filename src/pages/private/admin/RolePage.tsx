@@ -1,6 +1,10 @@
-import { AppApi, IRole } from '@apis';
-import { Card, Table, TableProps, Tag } from 'antd';
+import { AppApi, AppUtil, IRole } from '@apis';
+import { Card, Table, TableProps, Tag, Input, Space, Button, Row, Col } from 'antd';
 import React, { useEffect, useState } from 'react';
+import type { GetProps } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+
+type SearchProps = GetProps<typeof Input.Search>;
 
 const TAG_KIND_COLOR_MAP: {[key: string]: string} = {
 	system: 'red',
@@ -28,15 +32,26 @@ export const RolePage: React.FC = () => {
 		{ dataIndex: 'description', title: 'Description' }
 	];
 
+	const handleOnSearch: SearchProps['onSearch'] = async (value) => {
+		const roles = (await AppApi.getRoles()).filter(role => 
+			AppUtil.isEmpty(value) || AppUtil.contains(role.name, value) || AppUtil.contains(role.description?? '', value)
+		);
+		setRoles(roles);
+	}
+
 	useEffect(() => {
-		(async () => {
-			setRoles(await AppApi.roles());
-		})();
+		handleOnSearch('');
 	}, []);
-	
+
 	return (
 		<Card className='w-full'>
-			<Table<IRole> rowKey='id' columns={columns} dataSource={roles} />
+			<Space className='w-full' direction='vertical'>
+				<Space>
+					<Button type="primary" icon={<PlusOutlined />}>Add New Role</Button>
+					<Input.Search style={{width: '448px'}} placeholder='Search Role' allowClear onSearch={handleOnSearch} />
+				</Space>
+				<Table<IRole> rowKey='id' columns={columns} dataSource={roles} />
+			</Space>
 		</Card>
 	);
 }

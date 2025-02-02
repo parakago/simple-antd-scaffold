@@ -48,6 +48,11 @@ export namespace AppUtil {
 		return self.crypto.randomUUID();
 	}
 
+	export function contains(text: string, substr?: string, ignoreCase: boolean = true): boolean {
+		if (substr === undefined) return false;
+		return ignoreCase ? text.toLowerCase().includes(substr.toLowerCase()) : text.includes(substr);
+	}
+
 	export function getBrowserPath(): string {
 		let currentPath = window.location.hash;
 		if (currentPath.indexOf('#') != -1) {
