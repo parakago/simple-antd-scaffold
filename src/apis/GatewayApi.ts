@@ -18,6 +18,7 @@ export interface IAuthResponse {
 
 export const GatewayApi = {
 	sessionStatus: (): Promise<null | ISessionStatus> => {
+		console.log(document.cookie);
 		if (AppUtil.isEmpty(document.cookie)) {
 			return Promise.resolve(null);
 		}
@@ -39,7 +40,7 @@ export const GatewayApi = {
 		return Promise.resolve({ result });
 	},
 	logout: (): Promise<void> => {
-		document.cookie = "";
+		document.cookie = document.cookie = 'mock_session_uid=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 		return Promise.resolve();
 	}
 }

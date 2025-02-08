@@ -1,8 +1,10 @@
-import { MoonOutlined, SunOutlined, UserOutlined } from "@ant-design/icons";
-import { useAppContext } from "@contexts";
-import { Avatar, Tooltip } from "antd";
+import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from "@ant-design/icons";
+import { App, useAppContext } from "@contexts";
+import { Avatar, Dropdown, Space, Tooltip } from "antd";
+import type { MenuProps } from 'antd';
 import React from "react";
 import { AppUtil } from "../../apis/AppUtil";
+import { GatewayApi } from "@apis";
 
 export interface INavBarUserProps {
 	className?: string;
@@ -19,6 +21,18 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 		appCtx.changeTheme(isDarkMode() ? 'light' : 'dark');
 	};
 
+	const items: MenuProps['items'] = [
+		{
+			key: '1',
+			label: 'Log out',
+			icon: <LogoutOutlined />,
+			onClick: async () => {
+				await GatewayApi.logout();
+				App.redirectToLogin('/');
+			}
+		}
+	];
+
 	const cls = AppUtil.classNames('flex items-center text-white gap-2', className);
 	return (
 		<div className={cls}>
@@ -30,12 +44,15 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 				}
 			</Tooltip>
 
-			<Avatar style={{ backgroundColor: '#87d068' }} shape="square" icon={<UserOutlined />} />
-
-			<div>
-				<div className="text-xs font-bold">HongGilDong</div>
-				<div className="text-xs">Asia/Seoul</div>
-			</div>
+			<Dropdown menu={{ items }}>
+				<Space>
+					<Avatar style={{ backgroundColor: '#87d068' }} shape="square" icon={<UserOutlined />} />
+					<div>
+						<div className="text-xs font-bold">HongGilDong</div>
+						<div className="text-xs">Asia/Seoul</div>
+					</div>
+				</Space>
+			</Dropdown>
 		</div>
 	)
 }

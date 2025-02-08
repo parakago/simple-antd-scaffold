@@ -1,4 +1,4 @@
-import { App, ConfigProvider, theme as antTheme } from 'antd';
+import { App, ConfigProvider, ModalFuncProps, theme as antTheme } from 'antd';
 import { MessageInstance } from "antd/es/message/interface";
 import { ModalStaticFunctions } from "antd/es/modal/confirm";
 import type { Locale } from 'antd/lib/locale';
@@ -13,6 +13,7 @@ class AppModal {
 	private readonly _modal: Omit<ModalStaticFunctions, 'warn'>;
 	constructor(modal: Omit<ModalStaticFunctions, 'warn'>) {
 		this._modal = modal;
+		console.log('modal initialized');
 	}
 	public error(content: React.ReactNode): Promise<void> {
 		return new Promise((resolve) => {
@@ -37,6 +38,11 @@ class AppModal {
 	public confirm(content: React.ReactNode): Promise<boolean> {
 		return new Promise((resolve) => {
 			this._modal.confirm({ title: APP_NAME, content, onOk: () => resolve(true), onCancel: () => resolve(false) });
+		});
+	}
+	public open(props: ModalFuncProps): Promise<void> {
+		return new Promise((_) => {
+			this._modal.info(props);
 		});
 	}
 }
@@ -139,9 +145,7 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 					}
 				}}
 			>
-				<App className='h-full'>
-					{children}
-				</App>
+				{children}
 			</ConfigProvider>
 		</AppContext.Provider>
 	);

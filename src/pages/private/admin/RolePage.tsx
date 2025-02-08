@@ -1,8 +1,10 @@
-import { AppApi, AppUtil, IRole } from '@apis';
-import { Card, Table, TableProps, Tag, Input, Space, Button, Row, Col } from 'antd';
-import React, { useEffect, useState } from 'react';
-import type { GetProps } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { AppApi, AppUtil, IRole } from '@apis';
+import { RoleEdit } from '@components';
+import { App } from '@contexts';
+import type { GetProps } from 'antd';
+import { Button, Card, Input, Space, Table, TableProps, Tag } from 'antd';
+import React, { useEffect, useState } from 'react';
 
 type SearchProps = GetProps<typeof Input.Search>;
 
@@ -39,6 +41,10 @@ export const RolePage: React.FC = () => {
 		setRoles(roles);
 	}
 
+	const handleOnAddNewRole = () => {
+		App.modal.open(<RoleEdit />)
+	}
+
 	useEffect(() => {
 		handleOnSearch('');
 	}, []);
@@ -47,7 +53,7 @@ export const RolePage: React.FC = () => {
 		<Card className='w-full'>
 			<Space className='w-full' direction='vertical'>
 				<Space>
-					<Button type="primary" icon={<PlusOutlined />}>Add New Role</Button>
+					<Button type="primary" icon={<PlusOutlined />} onClick={handleOnAddNewRole}>Add New Role</Button>
 					<Input.Search style={{width: '448px'}} placeholder='Search Role' allowClear onSearch={handleOnSearch} />
 				</Space>
 				<Table<IRole> rowKey='id' columns={columns} dataSource={roles} />
