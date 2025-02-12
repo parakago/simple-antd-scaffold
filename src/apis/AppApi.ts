@@ -1,26 +1,35 @@
 import { AppUtil } from "./AppUtil";
-
-export const DEFAULT_WEB_PATH = '/dashboard';
-
-export interface IWebMenu {
-	path: string;
-	label: string;
-	icon?: string;
-	children?: IWebMenu[];
-}
-
-export interface IRole {
-	id: string;
-	kind: 'system' | 'custom';
-	name: string;
-	tags?: string[];
-	description?: string;
-}
+import { ISessionStatus, IAuthRequest, IAuthResponse, IWebMenu, IRole } from "./interfaces";
 
 export const AppApi = {
 	_default_web_path: '/dashboard',
 	get DEFAULT_WEB_PATH() {
 		return this._default_web_path;
+	},
+	sessionStatus: (): Promise<null | ISessionStatus> => {
+		if (AppUtil.isEmpty(document.cookie)) {
+			return Promise.resolve(null);
+		}
+
+		const s = document.cookie.split("=");
+		return Promise.resolve({
+			uid: s[1],
+			theme: "light",
+			locale: "ko",
+			timezone: "Asia/Seoul"
+		});
+	},
+	login: (request: IAuthRequest): Promise<IAuthResponse> => {
+		const result = AppUtil.isNotEmpty(request.uid) && request.uid === request.pwd ? 0 : 1;
+		if (result === 0) {
+			document.cookie = `mock_session_uid=${request.uid}`;
+		}
+
+		return Promise.resolve({ result });
+	},
+	logout: (): Promise<void> => {
+		document.cookie = document.cookie = 'mock_session_uid=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		return Promise.resolve();
 	},
 	webMenus: (): Promise<IWebMenu[]> => {
 		return Promise.resolve([

@@ -1,7 +1,10 @@
+import { Card } from 'antd';
 import React from 'react';
 
 export const UserPage: React.FC = () => {
 	return (
-		<h3>UserPage</h3>
+		<Card className='w-full'>
+			UserPage
+		</Card>
 	);
 }

@@ -1,7 +1,8 @@
 import { DashboardOutlined, LoadingOutlined, TeamOutlined, ToolOutlined, UserOutlined } from '@ant-design/icons';
-import { AppApi, AppUtil, GatewayApi, IWebMenu } from '@apis';
+import { AppApi, AppUtil, IWebMenu } from '@apis';
 import { App } from '@contexts';
-import { Layout, Menu, MenuProps, Spin } from 'antd';
+import type { BreadcrumbProps } from 'antd';
+import { Breadcrumb, Layout, Menu, MenuProps, Spin } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import NavBarLogo from './components/NavBarLogo';
@@ -25,12 +26,12 @@ const PrivateLayout: React.FC = () => {
 
 	const refWebMenus = useRef<IWebMenu[]>(undefined);
 	const [mainMenuItems, setMainMenuItems] = useState<INavBarMenuItem[]>([]);
-	
+
 	useEffect(() => {
 		if (refWebMenus.current !== undefined) return;
 		
 		(async () => {
-			const status = await GatewayApi.sessionStatus();
+			const status = await AppApi.sessionStatus();
 			if (status === null) {
 				let currentPath = AppUtil.getBrowserPath();
 				if (currentPath === '/') {
@@ -54,6 +55,12 @@ const PrivateLayout: React.FC = () => {
 		})();
 	}, []);
 
+	const [mainWebMenuPath, subWebMenuPath] = AppUtil.extractCurrentWebMenuPath();
+
+	if (mainWebMenuPath === undefined) {
+		return <Navigate replace to={AppApi.DEFAULT_WEB_PATH} />;
+	}
+
 	if (refWebMenus.current === undefined) {
 		return (
 			<div className="flex h-full items-center justify-center">
@@ -66,8 +73,6 @@ const PrivateLayout: React.FC = () => {
 		App.navigate(selection.key);
 	}
 
-	const [mainWebMenuPath, subWebMenuPath] = AppUtil.extractCurrentWebMenuPath();
-
 	const subWebMenus = mainWebMenuPath === undefined ? [] : getChildWebMenus(refWebMenus.current, mainWebMenuPath);
 	const subMenuItems = subWebMenus.map((webMenu) => {
 		return {
@@ -76,8 +81,18 @@ const PrivateLayout: React.FC = () => {
 			icon: PreDefinedIconMap[webMenu.icon ?? 'none']
 		}
 	});
-
+	
 	const outlet = subMenuItems.length > 0 && subWebMenuPath === undefined ? <Navigate to={subMenuItems[0].key} replace /> : <Outlet/>;
+
+	const breadcrumbItems: BreadcrumbProps['items'] = [];
+	const mainMenu = mainMenuItems.find(menu => menu.path === mainWebMenuPath);
+	if (mainMenu !== undefined) {
+		breadcrumbItems.push({ title: mainMenu.label });
+	}
+	const subMenu = subMenuItems.find(menu => menu.key === subWebMenuPath);
+	if (subMenu !== undefined) {
+		breadcrumbItems.push({ title: subMenu.label });
+	}
 
 	return (
 		<Layout>
@@ -90,7 +105,9 @@ const PrivateLayout: React.FC = () => {
 			</Layout.Header>
 
 			<Layout.Content className='w-full px-[50px]'>
-				<div className='py-4 font-bold'>Selected Main Menu</div>
+				<div className='py-4 font-bold'>
+					<Breadcrumb separator=">" items={breadcrumbItems} />
+				</div>
 				<div className='flex gap-3' >
 					<Menu
 						mode="inline"

@@ -1,3 +1,3 @@
 export * from './AppApi';
 export * from './AppUtil';
-export * from './GatewayApi';
+export * from './interfaces';

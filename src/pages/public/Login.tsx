@@ -1,5 +1,5 @@
 import { CloseSquareFilled, LockOutlined, UserOutlined } from "@ant-design/icons";
-import { AppApi, GatewayApi, AppUtil } from "@apis";
+import { AppApi, AppUtil } from "@apis";
 import { App } from "@contexts";
 import { Alert, Button, Card, Checkbox, Flex, Form, Input, Typography } from "antd";
 import React from "react";
@@ -15,7 +15,7 @@ export const Login: React.FC = () => {
 	}
 
 	const handleOnFinish = async (values: any) => {
-		const result = await GatewayApi.login({uid: values.uid, pwd: values.pwd})
+		const result = await AppApi.login({uid: values.uid, pwd: values.pwd})
 		
 		if (result.result !== 0) {
 			setLoginErrMessage("Incorrect username or password.");

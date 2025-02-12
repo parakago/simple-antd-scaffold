@@ -1,10 +1,10 @@
 import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from "@ant-design/icons";
+import { AppApi } from "@apis";
 import { App, useAppContext } from "@contexts";
-import { Avatar, Dropdown, Space, Tooltip } from "antd";
 import type { MenuProps } from 'antd';
+import { Avatar, Dropdown, Space, Tooltip } from "antd";
 import React from "react";
-import { AppUtil } from "../../apis/AppUtil";
-import { GatewayApi } from "@apis";
+import { AppUtil } from "@apis";
 
 export interface INavBarUserProps {
 	className?: string;
@@ -27,7 +27,7 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 			label: 'Log out',
 			icon: <LogoutOutlined />,
 			onClick: async () => {
-				await GatewayApi.logout();
+				await AppApi.logout();
 				App.redirectToLogin('/');
 			}
 		}

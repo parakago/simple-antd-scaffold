@@ -13,7 +13,6 @@ class AppModal {
 	private readonly _modal: Omit<ModalStaticFunctions, 'warn'>;
 	constructor(modal: Omit<ModalStaticFunctions, 'warn'>) {
 		this._modal = modal;
-		console.log('modal initialized');
 	}
 	public error(content: React.ReactNode): Promise<void> {
 		return new Promise((resolve) => {

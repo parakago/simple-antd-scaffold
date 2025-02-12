@@ -13,12 +13,11 @@ const AppRouterContext = React.createContext<IAppRouteState | undefined>(undefin
 export const AppRouterContextProvider = () => {
 	const router = createHashRouter([
 		{
-			path: '/',
 			element: <PrivateLayout />,
 			children: [
-				{ path: '/dashboard', async lazy() { let { Dashboard } = await import('../pages/private/Dashboard'); return { Component: Dashboard } } },
-				{ path: '/admin/role', async lazy() { let { RolePage } = await import('../pages/private/admin/RolePage'); return { Component: RolePage } } },
-				{ path: '/admin/user', async lazy() { let { UserPage } = await import('../pages/private/admin/UserPage'); return { Component: UserPage } } },
+				{ path: '/dashboard', async lazy() { const { Dashboard } = await import('../pages/private/Dashboard'); return { Component: Dashboard } } },
+				{ path: '/admin/role', async lazy() { const { RolePage } = await import('../pages/private/admin/RolePage'); return { Component: RolePage } } },
+				{ path: '/admin/user', async lazy() { const { UserPage } = await import('../pages/private/admin/UserPage'); return { Component: UserPage } } },
 				{ path: "*", element: <NoMatch /> }
 			],
 			hydrateFallbackElement: <p>Loading...</p>
@@ -26,7 +25,7 @@ export const AppRouterContextProvider = () => {
 		{
 			element: <PublicLayout/>,
 			children: [
-				{ path: '/login', async lazy() { let { Login } = await import('../pages/public/Login'); return { Component: Login } } },
+				{ path: '/login', async lazy() { const { Login } = await import('../pages/public/Login'); return { Component: Login } } },
 			],
 			hydrateFallbackElement: <></>
 		}

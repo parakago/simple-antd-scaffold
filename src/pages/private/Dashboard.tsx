@@ -3,7 +3,7 @@ import React from 'react';
 
 export const Dashboard: React.FC = () => {
 	return (
-		<Card bordered={false}>
+		<Card>
 			<h3>Dashboard</h3>
 		</Card>
 		
