@@ -95,7 +95,7 @@ const PrivateLayout: React.FC = () => {
 	}
 
 	return (
-		<Layout>
+		<Layout className='h-full'>
 			<Layout.Header className='h-12 py-1 flex gap-x-4 items-center'>
 				<NavBarLogo className='w-28 h-8' />
 				<NavBarMenu className='grow h-full' items={mainMenuItems} onSelect={(menu) => {

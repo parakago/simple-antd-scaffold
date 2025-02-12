@@ -1,3 +1,4 @@
+export const APP_NAME = 'HELO';
 export const DEFAULT_WEB_PATH = '/dashboard';
 
 export interface ISessionStatus {

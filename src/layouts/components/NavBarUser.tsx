@@ -1,4 +1,4 @@
-import { LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from "@ant-design/icons";
+import { GlobalOutlined, LogoutOutlined, MoonOutlined, SunOutlined, UserOutlined } from "@ant-design/icons";
 import { AppApi } from "@apis";
 import { App, useAppContext } from "@contexts";
 import type { MenuProps } from 'antd';
@@ -43,7 +43,9 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 					<MoonOutlined className="mr-2 text-lg" onClick={() => { switchAppTheme(); }}/>
 				}
 			</Tooltip>
-
+			<Dropdown menu={{ items }}>
+				<GlobalOutlined className="mr-2 text-lg" />
+			</Dropdown>
 			<Dropdown menu={{ items }}>
 				<Space>
 					<Avatar style={{ backgroundColor: '#87d068' }} shape="square" icon={<UserOutlined />} />

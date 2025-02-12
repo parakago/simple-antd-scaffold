@@ -6,8 +6,13 @@ import enUS from 'antd/locale/en_US';
 import koKR from 'antd/locale/ko_KR';
 import React from "react";
 import { NavigateOptions, To } from "react-router-dom";
+import { setTranslations, setLocale } from 'react-i18nify';
+import { en, ko } from '../locales'
+import { APP_NAME } from '@apis';
 
-export const APP_NAME = 'HELO';
+setTranslations({ en, ko });
+// TODO: set default locale from user's preference
+setLocale('ko');
 
 class AppModal {
 	private readonly _modal: Omit<ModalStaticFunctions, 'warn'>;

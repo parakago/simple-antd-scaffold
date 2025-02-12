@@ -3,6 +3,7 @@ import { AppApi, AppUtil } from "@apis";
 import { App } from "@contexts";
 import { Alert, Button, Card, Checkbox, Flex, Form, Input, Typography } from "antd";
 import React from "react";
+import { translate as t } from "react-i18nify";
 import { useLocation } from "react-router-dom";
 
 export const Login: React.FC = () => {
@@ -32,7 +33,9 @@ export const Login: React.FC = () => {
 
 	return (
 		<Flex className="h-full" gap="small" justify="center" align="center" vertical>
-			<Typography.Title level={3} className="text-center font-bold" >Log in to HELO</Typography.Title>
+			<Typography.Title level={3} className="text-center font-bold" >
+				{t("app.title")}
+			</Typography.Title>
 			{loginErrMessage !== undefined && (
 				<Alert type="error" className="w-80" afterClose={handleOnAlertClose}
 					message={loginErrMessage}
@@ -41,17 +44,23 @@ export const Login: React.FC = () => {
 			)}
 			<Card className="w-80">
 				<Form name="login" layout="vertical" form={form} onFinish={handleOnFinish} initialValues={{uid: "gdhong", pwd: "gdhong"}}>
-					<Form.Item name="uid" label="Username" rules={[{ required: true, message: "Please input your username!" }]}>
+					<Form.Item name="uid"
+						label={t("com.uid")} 
+						rules={[{ required: true, message: t("page.login.requireUid") }]}
+					>
 						<Input prefix={<UserOutlined />} autoFocus />
 					</Form.Item>
-					<Form.Item name="pwd" label="Password" rules={[{ required: true, message: "Please input your password!" }]}>
+					<Form.Item name="pwd" 
+						label={t("com.pwd")}
+						rules={[{ required: true, message: t("page.login.requirePwd") }]}
+					>
 						<Input.Password prefix={<LockOutlined />} type="password" />
 					</Form.Item>
-					<Form.Item name="remember" valuePropName="checked">
-						<Checkbox>Remember Username</Checkbox>
+					<Form.Item name="rememberUid" valuePropName="checked">
+						<Checkbox>{t("page.login.rememberUid")}</Checkbox>
 					</Form.Item>
 					<Form.Item>
-						<Button block type="primary" htmlType="submit">Log in</Button>
+						<Button block type="primary" htmlType="submit">{t("com.login")}</Button>
 					</Form.Item>
 				</Form>
 			</Card>
