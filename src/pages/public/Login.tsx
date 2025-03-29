@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
 			return;
 		}
 		
-		App.navigate(redirectPath, { state: null, replace: true });
+		App.navigate(redirectPath, { state: undefined, replace: true });
 	};
 
 	const handleOnAlertClose = () => {

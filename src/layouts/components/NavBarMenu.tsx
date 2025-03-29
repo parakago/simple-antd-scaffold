@@ -24,7 +24,7 @@ const NavBarMenu: React.FC<INavBarMenuProps> = ({className, items, onSelect}) =>
 				const selClass = mainWebMenuPath === item.path ? " bg-gray-400/20" : "";
 				return (
 					<li key={item.path}
-						className={"cursor-pointer mr-1 px-3 h-10 flex items-center rounded-sm hover:bg-gray-400/30" + selClass}
+						className={"cursor-pointer mr-1 px-3 h-8 flex items-center rounded-sm hover:bg-gray-400/30" + selClass}
 						onClick={() => {
 							onSelect?.(item);
 						}}

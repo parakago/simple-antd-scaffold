@@ -7,6 +7,16 @@ export const en = {
 		pwd: 'Password',
 		login: 'Login'
 	},
+	menu: {
+		main: {
+			dashboard: 'Dashboard',
+			admin: 'Admin'
+		},
+		admin: {
+			role: 'Role',
+			user: 'User'
+		}
+	},
 	page: {
 		login: {
 			rememberUid: 'Remember Username',

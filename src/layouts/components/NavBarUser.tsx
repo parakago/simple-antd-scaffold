@@ -11,6 +11,8 @@ export interface INavBarUserProps {
 }
 
 const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
+	const [locale, setLocale] = React.useState('ko');
+
 	const appCtx = useAppContext();
 	
 	const isDarkMode = () => {
@@ -21,7 +23,31 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 		appCtx.changeTheme(isDarkMode() ? 'light' : 'dark');
 	};
 
-	const items: MenuProps['items'] = [
+	React.useEffect(() => {
+		(async() => {
+			const status = await AppApi.helo();
+			setLocale(status.locale);
+		})();
+	}, []);
+
+	const localeMenuItems: MenuProps['items'] = [
+		{
+			key: 'ko',
+			label: '🇰🇷 한국어',
+			onClick: () => {
+				appCtx.changeLocale('ko');
+			}
+		},
+		{
+			key: 'en',
+			label: '🇺🇸 English',
+			onClick: () => {
+				appCtx.changeLocale('en');
+			}
+		}
+	];
+
+	const userMenuItems: MenuProps['items'] = [
 		{
 			key: '1',
 			label: 'Log out',
@@ -43,10 +69,10 @@ const NavBarUser: React.FC<INavBarUserProps> = ({className}) => {
 					<MoonOutlined className="mr-2 text-lg" onClick={() => { switchAppTheme(); }}/>
 				}
 			</Tooltip>
-			<Dropdown menu={{ items }}>
+			<Dropdown menu={{ items: localeMenuItems, selectable: true, selectedKeys: [locale] }}>
 				<GlobalOutlined className="mr-2 text-lg" />
 			</Dropdown>
-			<Dropdown menu={{ items }}>
+			<Dropdown menu={{ items: userMenuItems }}>
 				<Space>
 					<Avatar style={{ backgroundColor: '#87d068' }} shape="square" icon={<UserOutlined />} />
 					<div>

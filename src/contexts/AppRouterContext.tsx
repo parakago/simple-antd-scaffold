@@ -30,12 +30,7 @@ export const AppRouterContextProvider = () => {
 			hydrateFallbackElement: <></>
 		}
 	], {
-			future: {
-				v7_fetcherPersist: true,
-				v7_normalizeFormMethod: true,
-				v7_relativeSplatPath: true,
-				v7_skipActionErrorRevalidation: true,
-			}
+			
 	});
 
 	return (

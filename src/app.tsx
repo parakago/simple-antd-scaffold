@@ -1,4 +1,4 @@
-import { AppContextProvider, AppRouterContextProvider, AppSessionProvider } from '@contexts';
+import { AppContextProvider, AppRouterContextProvider } from '@contexts';
 import { App } from 'antd';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
@@ -9,9 +9,7 @@ createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<App className='h-full'>
 			<AppContextProvider>
-				<AppSessionProvider>
-					<AppRouterContextProvider/>
-				</AppSessionProvider>
+				<AppRouterContextProvider/>
 			</AppContextProvider>
 		</App>
 	</StrictMode>

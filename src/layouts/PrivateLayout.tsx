@@ -4,6 +4,7 @@ import { App } from '@contexts';
 import type { BreadcrumbProps } from 'antd';
 import { Breadcrumb, Layout, Menu, MenuProps, Spin } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
+import { translate as t } from "react-i18nify";
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import NavBarLogo from './components/NavBarLogo';
 import NavBarMenu, { INavBarMenuItem } from './components/NavBarMenu';
@@ -31,8 +32,8 @@ const PrivateLayout: React.FC = () => {
 		if (refWebMenus.current !== undefined) return;
 		
 		(async () => {
-			const status = await AppApi.sessionStatus();
-			if (status === null) {
+			const status = await AppApi.helo();
+			if (status.uid === undefined) {
 				let currentPath = AppUtil.getBrowserPath();
 				if (currentPath === '/') {
 					currentPath = AppApi.DEFAULT_WEB_PATH;
@@ -46,7 +47,7 @@ const PrivateLayout: React.FC = () => {
 			const topMenuItems = (refWebMenus.current).map((webMenu) => {
 				return {
 					path: webMenu.path,
-					label: webMenu.label,
+					label: t(webMenu.label),
 					icon: PreDefinedIconMap[webMenu.icon ?? 'none']
 				}
 			});
@@ -77,7 +78,7 @@ const PrivateLayout: React.FC = () => {
 	const subMenuItems = subWebMenus.map((webMenu) => {
 		return {
 			key: webMenu.path,
-			label: webMenu.label,
+			label: t(webMenu.label),
 			icon: PreDefinedIconMap[webMenu.icon ?? 'none']
 		}
 	});
@@ -96,12 +97,12 @@ const PrivateLayout: React.FC = () => {
 
 	return (
 		<Layout className='h-full'>
-			<Layout.Header className='h-12 py-1 flex gap-x-4 items-center'>
-				<NavBarLogo className='w-28 h-8' />
+			<Layout.Header className='flex gap-x-4 items-center' style={{ height: '48px'}}>
+				<NavBarLogo className='w-28 h-6' />
 				<NavBarMenu className='grow h-full' items={mainMenuItems} onSelect={(menu) => {
 					App.navigate(menu.path);
 				}} />
-				<NavBarUser className='h-8' />
+				<NavBarUser className='h-6' />
 			</Layout.Header>
 
 			<Layout.Content className='w-full px-[50px]'>

@@ -8,11 +8,9 @@ import React from "react";
 import { NavigateOptions, To } from "react-router-dom";
 import { setTranslations, setLocale } from 'react-i18nify';
 import { en, ko } from '../locales'
-import { APP_NAME } from '@apis';
+import { APP_NAME, AppApi } from '@apis';
 
 setTranslations({ en, ko });
-// TODO: set default locale from user's preference
-setLocale('ko');
 
 class AppModal {
 	private readonly _modal: Omit<ModalStaticFunctions, 'warn'>;
@@ -83,7 +81,7 @@ export interface IAppState {
 	theme: 'dark' | 'light';
 	locale: Locale;
 	changeTheme: (theme: 'dark' | 'light') => void;
-	changeLocale: (locale: Locale) => void;
+	changeLocale: (locale: 'ko' | 'en') => void;
 }
 
 export interface IApp {
@@ -99,7 +97,7 @@ const AppContext = React.createContext<IAppState | undefined>(undefined);
 
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
 	const [theme, setTheme] = React.useState<'dark' | 'light'>('light');
-	const [locale, setLocale] = React.useState(window.navigator.language == 'ko' ? koKR : enUS);
+	const [antLocale, setAntLocale] = React.useState(window.navigator.language == 'ko' ? koKR : enUS);
 
 	const { message, modal } = App.useApp();
 
@@ -115,13 +113,22 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 		}
 	}
 
+	React.useEffect(() => {
+		(async () => {
+			const session = await AppApi.helo();
+			setLocale(session.locale);
+		})();
+	});
+	
 	const changeTheme = (theme: 'dark' | 'light') => {
 		setTheme(theme);
 		document.body.style.backgroundColor = theme == 'dark' ? '#f6f8fb' : 'var(--ant-color-bg-container)';
 	}
 
-	const changeLocale = (locale: Locale) => {
-		setLocale(locale);
+	const changeLocale = async (locale: 'ko' | 'en') => {
+		setAntLocale(locale == 'ko' ? koKR : enUS);
+		await AppApi.changeLocale(locale);
+		location.reload();
 	}
 
 	const handleError = (error: unknown) : Promise<void> => {
@@ -131,8 +138,8 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 	}
 	
 	return (
-		<AppContext.Provider value={{ handleError, locale, theme, changeTheme, changeLocale }}>
-			<ConfigProvider componentSize='middle' locale={locale}
+		<AppContext.Provider value={{ handleError, locale: antLocale, theme, changeTheme, changeLocale }}>
+			<ConfigProvider componentSize='middle' locale={antLocale}
 				theme={{
 					cssVar: true,
 					algorithm: theme === 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,

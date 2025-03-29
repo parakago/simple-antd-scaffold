@@ -7,6 +7,16 @@ export const ko = {
 		pwd: '비밀번호',
 		login: '로그인'
 	},
+	menu: {
+		main: {
+			dashboard: '대시보드',
+			admin: '관리'
+		},
+		admin: {
+			role: '역할',
+			user: '사용자'
+		}
+	},
 	page: {
 		login: {
 			rememberUid: '아이디 기억하기',
