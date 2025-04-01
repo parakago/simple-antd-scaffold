@@ -3,6 +3,7 @@ import { RouterProvider, createHashRouter } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import PrivateLayout from "../layouts/PrivateLayout";
 import { NoMatch } from "../pages/commons/NoMatch";
+import { Spin } from "antd";
 
 export interface IAppRouteState {
 	
@@ -20,14 +21,22 @@ export const AppRouterContextProvider = () => {
 				{ path: '/admin/user', async lazy() { const { UserPage } = await import('../pages/private/admin/UserPage'); return { Component: UserPage } } },
 				{ path: "*", element: <NoMatch /> }
 			],
-			hydrateFallbackElement: <p>Loading...</p>
+			hydrateFallbackElement: (
+				<div className="flex justify-center items-center h-screen bg-gray-100 animate-fade-in">
+					<Spin size="large" tip="Loading..." />
+				</div>
+			)
 		},
 		{
 			element: <PublicLayout/>,
 			children: [
 				{ path: '/login', async lazy() { const { Login } = await import('../pages/public/Login'); return { Component: Login } } },
 			],
-			hydrateFallbackElement: <></>
+			hydrateFallbackElement: (
+				<div className="flex justify-center items-center h-screen bg-gray-100 animate-fade-in">
+					<Spin size="large" tip="Loading..." />
+				</div>
+			)
 		}
 	], {
 			
