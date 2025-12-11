@@ -6,6 +6,11 @@ SQLite에서 Oracle처럼 LOWER() 함수를 사용하여 대소문자를 구분�
 
 In SQLite, you can create case-insensitive indexes using the LOWER() function, similar to Oracle's function-based indexes.
 
+**Related Files:**
+- [sqlite-index-examples.ts](./sqlite-index-examples.ts) - TypeScript utility functions for generating index statements
+- [test-sqlite-index-examples.ts](./test-sqlite-index-examples.ts) - Test file demonstrating the utilities (run with `npx tsx docs/test-sqlite-index-examples.ts`)
+- [BACKEND_INTEGRATION.md](./BACKEND_INTEGRATION.md) - Complete backend integration example
+
 ## Basic Syntax (기본 문법)
 
 ### Simple Column Index (일반 컬럼 인덱스)
