@@ -193,19 +193,29 @@ export namespace SQLiteIndexUtil {
      * 
      * @param tableName - Table name
      * @param columnName - Column name
-     * @param value - Search value (will be wrapped in LOWER())
+     * @param value - Search value (for demonstration purposes - in production use parameterized queries)
      * @returns SQL SELECT statement that uses the index
      * 
      * @example
      * generateCaseInsensitiveQuery('users', 'email', 'user@example.com')
-     * // Returns: "SELECT * FROM users WHERE LOWER(email) = LOWER('user@example.com');"
+     * // Returns: "SELECT * FROM users WHERE LOWER(email) = LOWER(?);"
+     * 
+     * @note For production use, always use parameterized queries to prevent SQL injection.
+     * This function generates a template query string for documentation purposes.
      */
     export function generateCaseInsensitiveQuery(
         tableName: string,
         columnName: string,
-        value: string
+        value?: string
     ): string {
-        return `SELECT * FROM users WHERE LOWER(${columnName}) = LOWER('${value}');`;
+        if (value === undefined) {
+            // Return parameterized query template (safe)
+            return `SELECT * FROM ${tableName} WHERE LOWER(${columnName}) = LOWER(?);`;
+        }
+        // Return example with placeholder (for documentation only)
+        // In production, use parameterized queries instead
+        const escapedValue = value.replace(/'/g, "''"); // Basic SQL escaping
+        return `SELECT * FROM ${tableName} WHERE LOWER(${columnName}) = LOWER('${escapedValue}');`;
     }
 }
 

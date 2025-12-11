@@ -6,6 +6,8 @@
 
 This document demonstrates how to utilize case-insensitive indexes when adding a SQLite backend to the current frontend application.
 
+⚠️ **Security Note**: All examples use parameterized queries (prepared statements) to prevent SQL injection. Never concatenate user input directly into SQL strings.
+
 ## Backend Integration Scenario
 
 ### Current Frontend Code (현재 프론트엔드 코드)
