@@ -17,3 +17,7 @@ This template is something I started creating to understand React, and its goal 
 
 ## Working on
 - i18n
+
+## Documentation
+- [SQLite Case-Insensitive Indexes](./docs/SQLITE_INDEXES.md) - Guide for creating case-insensitive indexes in SQLite using LOWER() function (대소문자 구분 없는 인덱스 가이드)
+- [Backend Integration Example](./docs/BACKEND_INTEGRATION.md) - Example of integrating SQLite backend with case-insensitive search (SQLite 백엔드 통합 예제)
